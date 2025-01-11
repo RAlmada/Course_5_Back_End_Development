@@ -18,6 +18,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseMiddleware<TokenValidationMiddleware>("secret_password_beyond_amazing_some_more");
+app.UseMiddleware<LoggingMiddleware>();
+
 var users = new List<User>();
 
 app.MapGet("/users/{id?}", (int? id) =>
@@ -80,7 +84,7 @@ app.MapDelete("/users/{id}", (int id) =>
 
 // app.UseHttpsRedirection();
 
-app.UseAuthorization();
+// app.UseAuthorization();
 
 app.MapControllers();
 
